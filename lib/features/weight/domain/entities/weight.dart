@@ -1,4 +1,4 @@
-class Weight {
+ class Weight {
   final int? id;
   final double value;
   final DateTime timeAdded;
@@ -6,6 +6,5 @@ class Weight {
   Weight(
     this.id,
     this.value,
-    this.timeAdded,
-  );
+  ) : timeAdded = DateTime.now();
 }

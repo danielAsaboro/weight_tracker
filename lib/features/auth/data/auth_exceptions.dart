@@ -1,0 +1,1 @@
+class AuthExceptions implements Exception {}
