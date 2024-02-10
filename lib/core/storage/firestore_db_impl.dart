@@ -7,13 +7,13 @@ class FirebaseFireStoreDB<T> implements DBStorage<T> {
   final String userId;
   final String collectionName;
   final CollectionReference collectionReference;
-  final T Function(String, Map<String, dynamic>) fromDS;
+  final T Function(String, Map<String, dynamic>) fromFireStore;
   final Map<String, dynamic> Function(T) toMap;
 
   FirebaseFireStoreDB(
     this.userId,
     this.collectionName, {
-    required this.fromDS,
+    required this.fromFireStore,
     required this.toMap,
   }) : collectionReference =
             FirebaseFirestore.instance.collection(collectionName);
@@ -21,6 +21,7 @@ class FirebaseFireStoreDB<T> implements DBStorage<T> {
   @override
   Future<void> createNewEntry(T data) async {
     try {
+      print(toMap(data));
       await collectionReference.add(toMap(data));
       // await collectionReference.doc(userId).set(T.toString());
     } catch (e) {
@@ -35,7 +36,7 @@ class FirebaseFireStoreDB<T> implements DBStorage<T> {
     try {
       final snap = await collectionReference.doc(id).get();
       if (!snap.exists) throw Exception("Document doesn't exist");
-      return fromDS(snap.id, snap.data()! as Map<String, dynamic>);
+      return fromFireStore(snap.id, snap.data()! as Map<String, dynamic>);
     } catch (e) {
       // Handle error
       print('Error updating entry with id $id: $e');
@@ -59,7 +60,13 @@ class FirebaseFireStoreDB<T> implements DBStorage<T> {
     try {
       print("about to get all entries lmao");
       return collectionReference.snapshots().map(
-          (snapshot) => snapshot.docs.map((doc) => doc.data() as T).toList());
+          // (snapshot) => snapshot.docs.map((doc) => doc.data() as T).toList());
+          (snapshot) => snapshot.docs.map((doc) {
+                print("printing document");
+                final json = doc.data() as Map<String, dynamic>;
+                print();
+                return fromFireStore("df", json);
+              }).toList());
     } catch (e) {
       // Handle error
       print('Error getting all entries: $e');

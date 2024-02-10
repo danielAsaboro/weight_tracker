@@ -19,6 +19,10 @@ class WeightNotifier extends StreamNotifier<List<Weight>> {
     ref.read(weightUseCaseProvider).createNewWeightEntry(weight);
   }
 
-  Future<void> updateThisWeight() async {}
-  Future<void> deleteThisWeight() async {}
+  Future<void> updateThisWeight(
+    int index,
+  ) async {}
+  Future<void> deleteThisWeight(
+    int index,
+  ) async {}
 }

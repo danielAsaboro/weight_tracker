@@ -5,7 +5,7 @@ import 'package:weight_tracker/features/weight/presentation/controllers/weight_c
 
 import '../../core/storage/db.dart';
 import '../../core/storage/firestore_db_impl.dart';
-import 'data/repo_impl/weigh_repo_impl.dart';
+import 'data/repo_impl/weight_repo_impl.dart';
 import 'domain/entities/weight.dart';
 import 'domain/usecase/weight_usecase.dart';
 
@@ -14,8 +14,8 @@ final fireBaseProvider = Provider<DBStorage<Weight>>((ref) {
   return FirebaseFireStoreDB<Weight>(
     "okay",
     "weights",
-    fromDS: (p0, p1) => Weight(null, 123),
-    toMap: (p0) => {},
+    fromFireStore: (p0, p1) => Weight(null, 123),
+    toMap: (weight) => weight.toJson(),
   );
 });
 
