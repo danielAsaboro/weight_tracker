@@ -14,6 +14,7 @@ class WeightRepoFireBaseImpl implements WeightRepo {
       final result = await _firebaseFireStoreDB.getEntryById(id);
       return result;
     } catch (e) {
+      // TODO
       rethrow;
     }
   }

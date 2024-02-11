@@ -14,7 +14,7 @@ class AppValidators {
   }
 }
 
-Future<Weight?> getWeight(
+Future<Weight?> getWeightFromAlertBox(
   BuildContext context,
   String title, [
   Weight? weight,
@@ -52,8 +52,9 @@ Future<Weight?> getWeight(
             AppButton(
               onPressed: () {
                 if (formKey.currentState!.validate()) {
-                  final weight =
-                      Weight(null, double.parse(weightTextController.text));
+                  final weight = Weight(
+                    value: double.parse(weightTextController.text),
+                  );
                   Navigator.of(context).pop(weight);
                 } else {
                   print("error");

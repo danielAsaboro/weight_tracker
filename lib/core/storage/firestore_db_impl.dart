@@ -58,15 +58,10 @@ class FirebaseFireStoreDB<T> implements DBStorage<T> {
   @override
   Stream<List<T>> getAllEntries() {
     try {
-      print("about to get all entries lmao");
-      return collectionReference.snapshots().map(
-          // (snapshot) => snapshot.docs.map((doc) => doc.data() as T).toList());
-          (snapshot) => snapshot.docs.map((doc) {
-                print("printing document");
-                final json = doc.data() as Map<String, dynamic>;
-                print();
-                return fromFireStore("df", json);
-              }).toList());
+      return collectionReference.snapshots().map((snapshot) => snapshot.docs
+          .map((doc) =>
+              fromFireStore(doc.id, doc.data() as Map<String, dynamic>))
+          .toList());
     } catch (e) {
       // Handle error
       print('Error getting all entries: $e');
