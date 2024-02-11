@@ -1,3 +1,4 @@
+import 'package:weight_tracker/core/constants/enums.dart';
 import 'package:weight_tracker/features/weight/domain/repo/weight_repo.dart';
 
 import '../entities/weight.dart';
@@ -48,6 +49,15 @@ class WeightUseCaseImpl implements WeightUseCase {
       String id, Weight updatedWeight) async {
     try {
       await _weightRepo.updateThisWeightEntry(id, updatedWeight);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Stream<List<Weight>> getAllWeightEntriesByQuery(OrderBy sortFilter) {
+    try {
+      return _weightRepo.getAllWeightEntriesBasedOnQuery(sortFilter);
     } catch (e) {
       rethrow;
     }

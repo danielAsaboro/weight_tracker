@@ -1,7 +1,9 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:weight_tracker/core/storage/db.dart';
 
-import '../types/type.dart';
+import '../constants/enums.dart';
 
 class FirebaseFireStoreDB<T> implements DBStorage<T> {
   final String collectionName;
@@ -76,18 +78,23 @@ class FirebaseFireStoreDB<T> implements DBStorage<T> {
   }
 
   @override
-  Future<List<T>> sortEntriesBy({
+  Stream<List<T>> sortEntriesBy({
     required OrderBy orderBy,
     required int limit,
-  }) async {
+  }) {
     try {
-      //
-      final result = await collectionReference
-          .orderBy(orderBy.filter,
-              descending: orderBy.direction.inDescendingOrder)
-          .get();
+      final orderResult = collectionReference
+          .orderBy(
+            orderBy.filter,
+            descending: orderBy.inDescendingOrder,
+          )
+          .snapshots()
+          .map((querySnapshot) => querySnapshot.docs);
 
-      return result.docs.map((doc) => doc.data() as T).toList();
+      return orderResult.map((docSnapshot) => docSnapshot
+          .map((doc) =>
+              fromFireStore(doc.id, doc.data() as Map<String, dynamic>))
+          .toList());
     } catch (e) {
       //
       // Handle error

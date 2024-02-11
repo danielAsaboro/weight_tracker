@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:weight_tracker/features/weight/providers.dart';
 
+import '../../../../core/constants/enums.dart';
 import '../../../auth/providers.dart';
 import '../../domain/entities/weight.dart';
 
@@ -57,6 +58,19 @@ class WeightNotifier extends StreamNotifier<List<Weight>> {
     } catch (e) {
       // TODO: check this out;
       print(e.toString());
+      rethrow;
+    }
+  }
+
+  Future<void> sortByQuery(OrderBy sortFilter) async {
+    try {
+      ref
+          .read(weightUseCaseProvider)
+          .getAllWeightEntriesByQuery(sortFilter)
+          .listen((event) {
+        state = AsyncValue.data(event);
+      });
+    } catch (e) {
       rethrow;
     }
   }

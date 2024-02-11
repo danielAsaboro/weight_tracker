@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:weight_tracker/core/types/type.dart';
 import 'package:weight_tracker/features/weight/presentation/components/input_alert.dart';
 import 'package:weight_tracker/features/weight/presentation/components/slide_left_background.dart';
 import 'package:weight_tracker/features/weight/presentation/components/slide_right_background.dart';
 import 'package:weight_tracker/features/weight/providers.dart';
 import 'package:weight_tracker/shared/presentation/components/bottom_sheet.dart';
 
+import '../../../../core/constants/enums.dart';
 import '../../../../shared/presentation/components/show_alert_dialog.dart';
 
 class WeightListScreen extends ConsumerStatefulWidget {
@@ -16,11 +18,40 @@ class WeightListScreen extends ConsumerStatefulWidget {
 }
 
 class _WeightListScreenState extends ConsumerState<WeightListScreen> {
+  OrderBy? selectedSortFilter;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Weights DashBoard"),
+        title: const Text("Weight DashBoard"),
+        actions: [
+          Row(
+            children: [
+              const Text("Sort By:"),
+              const SizedBox(
+                width: 20,
+              ),
+              DropdownButton(
+                value: selectedSortFilter,
+                underline: const SizedBox.shrink(),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                icon: const Icon(Icons.keyboard_arrow_down),
+                items: OrderBy.values.map((e) {
+                  return DropdownMenuItem<OrderBy>(
+                    value: e,
+                    child: Text(e.name),
+                  );
+                }).toList(),
+                onChanged: (value) async {
+                  setState(() {
+                    selectedSortFilter = value;
+                  });
+                  await ref.read(weightProvider.notifier).sortByQuery(value!);
+                },
+              ),
+            ],
+          ),
+        ],
       ),
       body: Consumer(
         builder: (context, ref, _) {
@@ -40,7 +71,9 @@ class _WeightListScreenState extends ConsumerState<WeightListScreen> {
                                   );
                                 },
                                 child: Dismissible(
-                                  key: Key(weights[index].timeAdded.toIso8601String()),
+                                  key: Key(weights[index]
+                                      .timeAdded
+                                      .toIso8601String()),
                                   confirmDismiss: (direction) async {
                                     if (direction ==
                                         DismissDirection.endToStart) {

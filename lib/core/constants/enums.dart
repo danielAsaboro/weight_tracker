@@ -1,13 +1,14 @@
-enum Filter {
-  date,
-  max,
-  min,
-}
+enum OrderBy {
+  dateUp("timeAdded", true),
+  dateDown("timeAdded", false),
+  valueUp("value", true),
+  valueDown("value", false);
 
-enum FilterDirection {
-  ascending(false),
-  descending(true);
+  const OrderBy(
+    this.filter,
+    this.inDescendingOrder,
+  );
 
-  const FilterDirection(this.inDescendingOrder);
+  final String filter;
   final bool inDescendingOrder;
 }

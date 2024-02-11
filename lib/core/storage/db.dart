@@ -1,3 +1,4 @@
+import '../constants/enums.dart';
 import '../types/type.dart';
 
 abstract interface class DBStorage<T> {
@@ -8,7 +9,7 @@ abstract interface class DBStorage<T> {
   Stream<List<T>> getAllEntries();
   Future<void> updateEntryWithId(String id, T data);
   Future<void> deleteThisEntryById(String id);
-  Future<List<T>> sortEntriesBy({
+  Stream<List<T>> sortEntriesBy({
     required OrderBy orderBy,
     required int limit,
   });

@@ -1,3 +1,5 @@
+import 'package:weight_tracker/core/constants/enums.dart';
+import 'package:weight_tracker/core/types/type.dart';
 import 'package:weight_tracker/features/weight/domain/entities/weight.dart';
 import 'package:weight_tracker/features/weight/domain/repo/weight_repo.dart';
 
@@ -40,6 +42,15 @@ class WeightRepoFireBaseImpl implements WeightRepo {
   Stream<List<Weight>> getAllWeightEntries() {
     try {
       return _firebaseFireStoreDB.getAllEntries();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Stream<List<Weight>> getAllWeightEntriesBasedOnQuery(OrderBy sortFilter) {
+    try {
+      return _firebaseFireStoreDB.sortEntriesBy(orderBy: sortFilter, limit: 10);
     } catch (e) {
       rethrow;
     }

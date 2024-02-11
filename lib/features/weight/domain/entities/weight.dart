@@ -19,7 +19,7 @@ class Weight {
       userId: json['userId'],
       value: json['value'],
       foodEaten: json['foodEaten'],
-      timeAdded: DateTime.parse(
+      timeAdded: DateTime.fromMillisecondsSinceEpoch(
         json['timeAdded'],
       ),
     );
@@ -46,7 +46,7 @@ class Weight {
       // 'id': id,
       'value': value,
       'userId': userId,
-      'timeAdded': timeAdded.toIso8601String(),
+      'timeAdded': timeAdded.millisecondsSinceEpoch,
       'foodEaten': foodEaten,
     };
   }
