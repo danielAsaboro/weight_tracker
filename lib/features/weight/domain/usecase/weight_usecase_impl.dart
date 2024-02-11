@@ -11,9 +11,7 @@ class WeightUseCaseImpl implements WeightUseCase {
   Future createNewWeightEntry(Weight weight) async {
     try {
       await _weightRepo.addNewWeightEntry(weight);
-      // TODO
     } catch (e) {
-      //
       rethrow;
     }
   }
@@ -22,7 +20,6 @@ class WeightUseCaseImpl implements WeightUseCase {
   Future deleteWeightEntryWithId(String id) async {
     try {
       await _weightRepo.deleteThisWeightEntry(id);
-      // TODO
     } catch (e) {
       rethrow;
     }
@@ -32,7 +29,6 @@ class WeightUseCaseImpl implements WeightUseCase {
   Stream<List<Weight>> getAllWeightEntries() {
     try {
       return _weightRepo.getAllWeightEntries();
-      //
     } catch (e) {
       rethrow;
     }
@@ -48,9 +44,10 @@ class WeightUseCaseImpl implements WeightUseCase {
   }
 
   @override
-  Future<void> updateThisWeightEntryWithId(String id, Weight updatedWeight) async {
+  Future<void> updateThisWeightEntryWithId(
+      String id, Weight updatedWeight) async {
     try {
-      return await _weightRepo.updateThisWeightEntry(id, updatedWeight);
+      await _weightRepo.updateThisWeightEntry(id, updatedWeight);
     } catch (e) {
       rethrow;
     }

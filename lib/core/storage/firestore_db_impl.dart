@@ -4,14 +4,12 @@ import 'package:weight_tracker/core/storage/db.dart';
 import '../types/type.dart';
 
 class FirebaseFireStoreDB<T> implements DBStorage<T> {
-  final String userId;
   final String collectionName;
   final CollectionReference collectionReference;
   final T Function(String, Map<String, dynamic>) fromFireStore;
   final Map<String, dynamic> Function(T) toMap;
 
   FirebaseFireStoreDB(
-    this.userId,
     this.collectionName, {
     required this.fromFireStore,
     required this.toMap,
@@ -21,11 +19,8 @@ class FirebaseFireStoreDB<T> implements DBStorage<T> {
   @override
   Future<void> createNewEntry(T data) async {
     try {
-      print(toMap(data));
       await collectionReference.add(toMap(data));
-      // await collectionReference.doc(userId).set(T.toString());
     } catch (e) {
-      // Handle error
       print('Error creating new entry: $e');
       rethrow;
     }
@@ -47,7 +42,7 @@ class FirebaseFireStoreDB<T> implements DBStorage<T> {
   @override
   Future<void> updateEntryWithId(String id, T data) async {
     try {
-      final result = await collectionReference.doc(id).update(toMap(data));
+      await collectionReference.doc(id).update(toMap(data));
     } catch (e) {
       // Handle error
       print('Error updating entry with id $id: $e');

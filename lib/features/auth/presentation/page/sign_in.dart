@@ -5,26 +5,28 @@ import 'package:weight_tracker/features/auth/providers.dart';
 import 'package:weight_tracker/features/weight/presentation/components/weight_list.dart';
 import 'package:weight_tracker/shared/presentation/components/app_button.dart';
 
-class SigInPage extends ConsumerStatefulWidget {
-  const SigInPage({super.key});
+class SignInPage extends ConsumerStatefulWidget {
+  const SignInPage({super.key});
 
   @override
-  ConsumerState<SigInPage> createState() => _SigInPageState();
+  ConsumerState<SignInPage> createState() => _SigInPageState();
 }
 
-class _SigInPageState extends ConsumerState<SigInPage> {
+class _SigInPageState extends ConsumerState<SignInPage> {
   @override
   Widget build(BuildContext context) {
     ref.listen(authControllerProvider, (previous, next) {
       if (next.value! == AuthState.signedIn) {
-        Navigator.push(
+        Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-                builder: (
-              context,
-            ) =>
-                    const WeightListScreen()));
+              builder: (
+                context,
+              ) =>
+                  const WeightListScreen(),
+            ));
       }
+      // TODO: Check if signin error;
     });
 
     final authController = ref.watch(authControllerProvider);
@@ -34,14 +36,9 @@ class _SigInPageState extends ConsumerState<SigInPage> {
         child: Center(
           child: AppButton(
             onPressed: () async {
-              try {
-                await ref
-                    .read(authControllerProvider.notifier)
-                    .signInAnonymously();
-              } catch (e) {
-                // TODO
-                print(e.toString());
-              }
+              await ref
+                  .read(authControllerProvider.notifier)
+                  .signInAnonymously();
             },
             child: authController.isLoading
                 ? const Row(

@@ -5,7 +5,6 @@ import 'package:weight_tracker/features/weight/providers.dart';
 import 'package:weight_tracker/shared/presentation/components/app_button.dart';
 import 'package:weight_tracker/shared/presentation/components/app_textfield.dart';
 
-
 Future<Weight?> showUpdateBottomSheet(
   BuildContext context,
   int index,
@@ -27,7 +26,6 @@ Future<Weight?> showUpdateBottomSheet(
                     child: ListTile(
                       leading: const Icon(Icons.run_circle_outlined),
                       title: Text(retrievedWeight.value.toString()),
-
                       subtitle:
                           Text(retrievedWeight.timeAdded.toIso8601String()),
                       // TODO, format that date properly
@@ -55,15 +53,7 @@ Future<Weight?> showUpdateBottomSheet(
                             .read(weightProvider.notifier)
                             .updateThisWeight(index, updatedWeightDetails);
                         Navigator.of(context).pop(updatedWeightDetails);
-                        // TODO
-                      } else {
-                        // TODO
-                        print("error");
                       }
-                      // TODO
-                      Navigator.of(context).pop(
-                          // TODO
-                          );
                     },
                     child: const Text("Update Details"),
                   )

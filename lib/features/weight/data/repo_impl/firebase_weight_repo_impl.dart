@@ -14,7 +14,6 @@ class WeightRepoFireBaseImpl implements WeightRepo {
       final result = await _firebaseFireStoreDB.getEntryById(id);
       return result;
     } catch (e) {
-      // TODO
       rethrow;
     }
   }
@@ -22,10 +21,9 @@ class WeightRepoFireBaseImpl implements WeightRepo {
   @override
   Future<void> addNewWeightEntry(Weight weight) async {
     try {
-      final result = await _firebaseFireStoreDB.createNewEntry(weight);
+      await _firebaseFireStoreDB.createNewEntry(weight);
     } catch (e) {
-      //
-      // TODO
+      rethrow;
     }
   }
 
@@ -34,8 +32,7 @@ class WeightRepoFireBaseImpl implements WeightRepo {
     try {
       await _firebaseFireStoreDB.deleteThisEntryById(weightEntryId);
     } catch (e) {
-      //
-      // TODO
+      rethrow;
     }
   }
 
@@ -44,8 +41,6 @@ class WeightRepoFireBaseImpl implements WeightRepo {
     try {
       return _firebaseFireStoreDB.getAllEntries();
     } catch (e) {
-      //
-      // TODO
       rethrow;
     }
   }
@@ -54,16 +49,12 @@ class WeightRepoFireBaseImpl implements WeightRepo {
   Future<void> updateThisWeightEntry(
       String weightEntryId, Weight updatedWeight) async {
     try {
-      return _firebaseFireStoreDB.updateEntryWithId(
+      await _firebaseFireStoreDB.updateEntryWithId(
         weightEntryId,
         updatedWeight,
       );
     } catch (e) {
-      //
-      // TODO
       rethrow;
     }
   }
-
-  //
 }

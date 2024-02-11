@@ -37,3 +37,12 @@ The assignment will be evaluated according to the following criteria:
 - naming conventions for variables, functions and classes
 - Making the UI look nice is not required as part of this task - 
   legible text and usable UI is sufficient.
+
+
+Personal:
+Include INTL for date;
+Show success alert
+Accessibility?
+Proper Error Handling
+No prints lying around?
+dart fix at the end.

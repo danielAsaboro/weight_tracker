@@ -1,5 +1,5 @@
 enum AuthFailure{
   aborted,
   generic,
-  // TODO
+  noInternet,
 }

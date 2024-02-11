@@ -3,17 +3,16 @@ import 'package:weight_tracker/features/weight/domain/repo/weight_repo.dart';
 import 'package:weight_tracker/features/weight/domain/usecase/weight_usecase_impl.dart';
 import 'package:weight_tracker/features/weight/presentation/controllers/weight_controller.dart';
 
+import '../../core/constants/string_constants.dart';
 import '../../core/storage/db.dart';
 import '../../core/storage/firestore_db_impl.dart';
 import 'data/repo_impl/firebase_weight_repo_impl.dart';
 import 'domain/entities/weight.dart';
 import 'domain/usecase/weight_usecase.dart';
 
-// TODO: clean this stuff
 final fireBaseProvider = Provider<DBStorage<Weight>>((ref) {
   return FirebaseFireStoreDB<Weight>(
-    "okay",
-    "weights",
+    weightCollectionName,
     fromFireStore: Weight.fromJson,
     toMap: (weight) => weight.toJson(),
   );

@@ -6,10 +6,8 @@ import 'package:weight_tracker/features/auth/providers.dart';
 
 class AuthNotifier extends AsyncNotifier<AuthState> {
   @override
-  FutureOr<AuthState> build() {
-    // TODO:
-    ref.read(authUseCaseProvider).checkIfUserIsSignedInAlready();
-    return AuthState.signedOut;
+  FutureOr<AuthState> build() async {
+    return await ref.read(authUseCaseProvider).checkIfUserIsSignedInAlready();
   }
 
   Future<void> signInAnonymously() async {

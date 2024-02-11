@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:weight_tracker/features/weight/domain/entities/weight.dart';
 import 'package:weight_tracker/shared/presentation/components/app_button.dart';
 import 'package:weight_tracker/shared/presentation/components/app_textfield.dart';
 
@@ -14,15 +13,14 @@ class AppValidators {
   }
 }
 
-Future<Weight?> getWeightFromAlertBox(
+Future<double?> getWeightFromAlertBox(
   BuildContext context,
-  String title, [
-  Weight? weight,
-]) async {
+  String title,
+) async {
   GlobalKey<FormState> formKey = GlobalKey();
 
   final weightTextController = TextEditingController();
-  return showDialog<Weight?>(
+  return showDialog<double?>(
       context: context,
       builder: (context) {
         return AlertDialog(
@@ -52,14 +50,9 @@ Future<Weight?> getWeightFromAlertBox(
             AppButton(
               onPressed: () {
                 if (formKey.currentState!.validate()) {
-                  final weight = Weight(
-                    value: double.parse(weightTextController.text),
-                  );
+                  final weight = double.parse(weightTextController.text);
                   Navigator.of(context).pop(weight);
-                } else {
-                  print("error");
                 }
-                // TODO
               },
               child: const Text("Save"),
             ),
