@@ -53,12 +53,17 @@ class FirebaseFireStoreDB<T> implements DBStorage<T> {
   }
 
   @override
-  Stream<List<T>> getAllEntries() {
+  Stream<List<T>> getAllEntries(
+    String userId,
+  ) {
     try {
-      return collectionReference.snapshots().map((snapshot) => snapshot.docs
-          .map((doc) =>
-              fromFireStore(doc.id, doc.data() as Map<String, dynamic>))
-          .toList());
+      return collectionReference
+          .where("userId", isEqualTo: userId)
+          .snapshots()
+          .map((snapshot) => snapshot.docs
+              .map((doc) =>
+                  fromFireStore(doc.id, doc.data() as Map<String, dynamic>))
+              .toList());
     } catch (e) {
       // Handle error
       print('Error getting all entries: $e');
@@ -81,9 +86,11 @@ class FirebaseFireStoreDB<T> implements DBStorage<T> {
   Stream<List<T>> sortEntriesBy({
     required OrderBy orderBy,
     required int limit,
+    required String userId,
   }) {
     try {
       final orderResult = collectionReference
+          .where("userId", isEqualTo: userId)
           .orderBy(
             orderBy.filter,
             descending: orderBy.inDescendingOrder,

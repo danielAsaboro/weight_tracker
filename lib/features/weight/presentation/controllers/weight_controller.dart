@@ -11,7 +11,11 @@ class WeightNotifier extends StreamNotifier<List<Weight>> {
   @override
   Stream<List<Weight>> build() {
     final weightController = StreamController<List<Weight>>();
-    ref.read(weightUseCaseProvider).getAllWeightEntries().listen((event) {
+    final userDetails = ref.read(authUseCaseProvider).user;
+    ref
+        .read(weightUseCaseProvider)
+        .getAllWeightEntries(userDetails.userId)
+        .listen((event) {
       weightController.add(event);
     });
     return weightController.stream;
@@ -64,9 +68,14 @@ class WeightNotifier extends StreamNotifier<List<Weight>> {
 
   Future<void> sortByQuery(OrderBy sortFilter) async {
     try {
+      final userDetails = ref.read(authUseCaseProvider).user;
+
       ref
           .read(weightUseCaseProvider)
-          .getAllWeightEntriesByQuery(sortFilter)
+          .getAllWeightEntriesByQuery(
+            sortFilter,
+            userDetails.userId,
+          )
           .listen((event) {
         state = AsyncValue.data(event);
       });

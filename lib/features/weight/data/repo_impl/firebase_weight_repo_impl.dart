@@ -39,18 +39,25 @@ class WeightRepoFireBaseImpl implements WeightRepo {
   }
 
   @override
-  Stream<List<Weight>> getAllWeightEntries() {
+  Stream<List<Weight>> getAllWeightEntries(String userId) {
     try {
-      return _firebaseFireStoreDB.getAllEntries();
+      return _firebaseFireStoreDB.getAllEntries(userId);
     } catch (e) {
       rethrow;
     }
   }
 
   @override
-  Stream<List<Weight>> getAllWeightEntriesBasedOnQuery(OrderBy sortFilter) {
+  Stream<List<Weight>> getAllWeightEntriesBasedOnQuery(
+    OrderBy sortFilter,
+    String userId,
+  ) {
     try {
-      return _firebaseFireStoreDB.sortEntriesBy(orderBy: sortFilter, limit: 10);
+      return _firebaseFireStoreDB.sortEntriesBy(
+        orderBy: sortFilter,
+        limit: 10,
+        userId: userId,
+      );
     } catch (e) {
       rethrow;
     }

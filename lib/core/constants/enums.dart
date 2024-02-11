@@ -1,8 +1,8 @@
 enum OrderBy {
-  dateUp("timeAdded", true),
-  dateDown("timeAdded", false),
-  valueUp("value", true),
-  valueDown("value", false);
+  dateUp("timeAdded", false),
+  dateDown("timeAdded", true),
+  valueUp("value", false),
+  valueDown("value", true);
 
   const OrderBy(
     this.filter,

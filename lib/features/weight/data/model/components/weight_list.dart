@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:weight_tracker/features/auth/presentation/controllers/auth.dart';
-import 'package:weight_tracker/features/auth/presentation/page/sign_in.dart';
-import 'package:weight_tracker/features/auth/providers.dart';
-import 'package:weight_tracker/features/weight/presentation/components/input_alert.dart';
-import 'package:weight_tracker/features/weight/presentation/components/slide_left_background.dart';
-import 'package:weight_tracker/features/weight/presentation/components/slide_right_background.dart';
+import 'package:weight_tracker/core/types/type.dart';
 import 'package:weight_tracker/features/weight/providers.dart';
-import 'package:weight_tracker/shared/presentation/components/app_button.dart';
 import 'package:weight_tracker/shared/presentation/components/bottom_sheet.dart';
 
-import '../../../../core/constants/enums.dart';
-import '../../../../shared/presentation/components/show_alert_dialog.dart';
+import '../../../../../core/constants/enums.dart';
+import '../../../../../shared/presentation/components/show_alert_dialog.dart';
+import '../../../presentation/components/input_alert.dart';
+import '../../../presentation/components/slide_left_background.dart';
+import '../../../presentation/components/slide_right_background.dart';
 
 class WeightListScreen extends ConsumerStatefulWidget {
   const WeightListScreen({super.key});
@@ -24,55 +21,37 @@ class _WeightListScreenState extends ConsumerState<WeightListScreen> {
   OrderBy? selectedSortFilter;
   @override
   Widget build(BuildContext context) {
-    ref.listen(authControllerProvider, ((previous, next) {
-      if (next.requireValue == AuthState.signedOut) {
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => const SignInPage()));
-      }
-    }));
     return Scaffold(
       appBar: AppBar(
         title: const Text("Weight DashBoard"),
         actions: [
-          DropdownButton(
-            hint: const Text("Sort By"),
-            value: selectedSortFilter,
-            underline: const SizedBox.shrink(),
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            icon: const Icon(Icons.keyboard_arrow_down),
-            items: OrderBy.values.map((e) {
-              return DropdownMenuItem<OrderBy>(
-                value: e,
-                child: Text(e.name),
-              );
-            }).toList(),
-            onChanged: (value) async {
-              setState(() {
-                selectedSortFilter = value;
-              });
-              await ref.read(weightProvider.notifier).sortByQuery(value!);
-            },
-          ),
-        ],
-      ),
-      drawer: Drawer(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+          Row(
             children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: AppButton(
-                  buttonHeight: 50,
-                  onPressed: () async {
-                    await ref.read(authControllerProvider.notifier).signOut();
-                  },
-                  child: const Text("Log Out"),
-                ),
+              const Text("Sort By:"),
+              const SizedBox(
+                width: 20,
+              ),
+              DropdownButton(
+                value: selectedSortFilter,
+                underline: const SizedBox.shrink(),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                icon: const Icon(Icons.keyboard_arrow_down),
+                items: OrderBy.values.map((e) {
+                  return DropdownMenuItem<OrderBy>(
+                    value: e,
+                    child: Text(e.name),
+                  );
+                }).toList(),
+                onChanged: (value) async {
+                  setState(() {
+                    selectedSortFilter = value;
+                  });
+                  await ref.read(weightProvider.notifier).sortByQuery(value!);
+                },
               ),
             ],
           ),
-        ),
+        ],
       ),
       body: Consumer(
         builder: (context, ref, _) {

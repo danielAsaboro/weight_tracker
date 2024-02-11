@@ -25,7 +25,6 @@ class MyApp extends StatelessWidget {
             title: 'Weight Tracker Interview Showcase',
             home: child,
             theme: ThemeData(
-              colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
               useMaterial3: true,
             ),
             debugShowCheckedModeBanner: false,

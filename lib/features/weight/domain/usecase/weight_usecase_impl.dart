@@ -27,9 +27,9 @@ class WeightUseCaseImpl implements WeightUseCase {
   }
 
   @override
-  Stream<List<Weight>> getAllWeightEntries() {
+  Stream<List<Weight>> getAllWeightEntries(String userId) {
     try {
-      return _weightRepo.getAllWeightEntries();
+      return _weightRepo.getAllWeightEntries(userId);
     } catch (e) {
       rethrow;
     }
@@ -46,7 +46,9 @@ class WeightUseCaseImpl implements WeightUseCase {
 
   @override
   Future<void> updateThisWeightEntryWithId(
-      String id, Weight updatedWeight) async {
+    String id,
+    Weight updatedWeight,
+  ) async {
     try {
       await _weightRepo.updateThisWeightEntry(id, updatedWeight);
     } catch (e) {
@@ -55,9 +57,10 @@ class WeightUseCaseImpl implements WeightUseCase {
   }
 
   @override
-  Stream<List<Weight>> getAllWeightEntriesByQuery(OrderBy sortFilter) {
+  Stream<List<Weight>> getAllWeightEntriesByQuery(
+      OrderBy sortFilter, String userId) {
     try {
-      return _weightRepo.getAllWeightEntriesBasedOnQuery(sortFilter);
+      return _weightRepo.getAllWeightEntriesBasedOnQuery(sortFilter, userId);
     } catch (e) {
       rethrow;
     }
