@@ -2,8 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../domain/entities/user.dart';
 
-class FirebaseUser extends AppUser {
-  FirebaseUser(
+class FirebaseAppUser extends AppUser {
+  FirebaseAppUser(
     super.userId,
     super.email,
     super.isVerified,
@@ -12,8 +12,8 @@ class FirebaseUser extends AppUser {
     super.avatarUrl,
   );
 
-  factory FirebaseUser.fromJson(User firebaseUser) {
-    return FirebaseUser(
+  factory FirebaseAppUser.fromJson(User firebaseUser) {
+    return FirebaseAppUser(
       firebaseUser.uid,
       firebaseUser.email,
       firebaseUser.emailVerified,

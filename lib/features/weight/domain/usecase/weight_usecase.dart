@@ -1,4 +1,5 @@
 import '../../../../core/constants/enums.dart';
+import '../../../../core/types/type.dart';
 import '../entities/weight.dart';
 
 abstract class WeightUseCase {
@@ -9,6 +10,7 @@ abstract class WeightUseCase {
   Stream<List<Weight>> getAllWeightEntries(String userId);
   Stream<List<Weight>> getAllWeightEntriesByQuery(
     OrderBy sortFilter,
+    PageNumber pageNumber,
     String userId,
   );
 }

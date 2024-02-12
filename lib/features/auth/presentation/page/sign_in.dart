@@ -53,7 +53,7 @@ class _SigInPageState extends ConsumerState<SignInPage> {
                       ),
                     ],
                   )
-                : const Text("Sign In"),
+                : const Text("Sign In Anonymously"),
           ),
         ),
       ),

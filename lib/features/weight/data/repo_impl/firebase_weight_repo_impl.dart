@@ -50,12 +50,13 @@ class WeightRepoFireBaseImpl implements WeightRepo {
   @override
   Stream<List<Weight>> getAllWeightEntriesBasedOnQuery(
     OrderBy sortFilter,
+    PageNumber pageNumber,
     String userId,
   ) {
     try {
       return _firebaseFireStoreDB.sortEntriesBy(
         orderBy: sortFilter,
-        limit: 10,
+        pageNumber: pageNumber,
         userId: userId,
       );
     } catch (e) {

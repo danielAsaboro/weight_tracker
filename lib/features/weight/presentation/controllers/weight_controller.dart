@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:weight_tracker/core/types/type.dart';
 import 'package:weight_tracker/features/weight/providers.dart';
 
 import '../../../../core/constants/enums.dart';
@@ -66,7 +67,10 @@ class WeightNotifier extends StreamNotifier<List<Weight>> {
     }
   }
 
-  Future<void> sortByQuery(OrderBy sortFilter) async {
+  Future<void> sortByQuery(
+    OrderBy sortFilter, {
+    PageNumber pageNumber = 1,
+  }) async {
     try {
       final userDetails = ref.read(authUseCaseProvider).user;
 
@@ -74,6 +78,7 @@ class WeightNotifier extends StreamNotifier<List<Weight>> {
           .read(weightUseCaseProvider)
           .getAllWeightEntriesByQuery(
             sortFilter,
+            pageNumber,
             userDetails.userId,
           )
           .listen((event) {

@@ -1,3 +1,5 @@
+import 'package:weight_tracker/core/types/type.dart';
+
 import '../constants/enums.dart';
 
 abstract interface class DBStorage<T> {
@@ -12,7 +14,7 @@ abstract interface class DBStorage<T> {
   );
   Stream<List<T>> sortEntriesBy({
     required OrderBy orderBy,
-    required int limit,
+    required PageNumber pageNumber,
     required String userId,
   });
 }

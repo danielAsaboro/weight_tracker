@@ -1,6 +1,7 @@
 import 'package:weight_tracker/features/weight/domain/entities/weight.dart';
 
 import '../../../../core/constants/enums.dart';
+import '../../../../core/types/type.dart';
 
 abstract interface class WeightRepo {
   Future<void> addNewWeightEntry(Weight weight);
@@ -13,6 +14,7 @@ abstract interface class WeightRepo {
   Stream<List<Weight>> getAllWeightEntries(String userId);
   Stream<List<Weight>> getAllWeightEntriesBasedOnQuery(
     OrderBy sortFilter,
+    PageNumber pageNumber,
     String userId,
   );
 }

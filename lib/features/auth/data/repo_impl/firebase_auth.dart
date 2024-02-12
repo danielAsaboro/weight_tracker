@@ -18,7 +18,7 @@ class FireBaseAuthImpl implements AuthRepo {
       final authResult = await _auth.signInAnonymously();
       return (
         authFailure: null,
-        userDetails: FirebaseUser.fromJson(authResult.user!),
+        userDetails: FirebaseAppUser.fromJson(authResult.user!),
       );
     } on FirebaseAuthException catch (e) {
       if (e.code == "operation-not-allowed") {
