@@ -1,5 +1,4 @@
 import '../constants/enums.dart';
-import '../types/type.dart';
 
 abstract interface class DBStorage<T> {
   Future<void> createNewEntry(T data);

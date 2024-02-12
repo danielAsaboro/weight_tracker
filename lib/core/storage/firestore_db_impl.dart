@@ -35,7 +35,6 @@ class FirebaseFireStoreDB<T> implements DBStorage<T> {
       if (!snap.exists) throw Exception("Document doesn't exist");
       return fromFireStore(snap.id, snap.data()! as Map<String, dynamic>);
     } catch (e) {
-      // Handle error
       print('Error updating entry with id $id: $e');
       rethrow;
     }
