@@ -58,7 +58,7 @@ class FirebaseFireStoreDB<T> implements DBStorage<T> {
   ) {
     try {
       return collectionReference
-          .where("userId", isEqualTo: userId)
+          .where("userId", isEqualTo: userId) 
           .snapshots()
           .map((snapshot) => snapshot.docs
               .map((doc) =>
